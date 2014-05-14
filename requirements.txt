@@ -1,4 +1,4 @@
 Django==1.6.4
-django-attachments==0.3.1dev
+git+https://github.com/bartTC/django-attachments.git
 South==0.8.4
 mock==1.0.1
