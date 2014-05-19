@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'tasks',
     'south',
     'attachments',
-    'bootstrapform',
     'bootstrap3',
     'ajax_select',
     'notification',
