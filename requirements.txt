@@ -2,4 +2,5 @@ Django==1.6.5
 git+https://github.com/bartTC/django-attachments.git
 South==0.8.4
 mock==1.0.1
-django-bootstrap-form==3.1
+django-bootstrap3==4.4.1
+django-notification==1.1.1

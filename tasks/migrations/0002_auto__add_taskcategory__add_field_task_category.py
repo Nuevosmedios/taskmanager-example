@@ -8,19 +8,26 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding M2M table for field users on 'Task'
-        m2m_table_name = db.shorten_name(u'tasks_task_users')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('task', models.ForeignKey(orm[u'tasks.task'], null=False)),
-            ('user', models.ForeignKey(orm[u'auth.user'], null=False))
+        # Adding model 'TaskCategory'
+        db.create_table(u'tasks_taskcategory', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=30)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tasks.TaskCategory'], null=True, blank=True)),
         ))
-        db.create_unique(m2m_table_name, ['task_id', 'user_id'])
+        db.send_create_signal(u'tasks', ['TaskCategory'])
+
+        # Adding field 'Task.category'
+        db.add_column(u'tasks_task', 'category',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default='', to=orm['tasks.TaskCategory']),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Removing M2M table for field users on 'Task'
-        db.delete_table(db.shorten_name(u'tasks_task_users'))
+        # Deleting model 'TaskCategory'
+        db.delete_table(u'tasks_taskcategory')
+
+        # Deleting field 'Task.category'
+        db.delete_column(u'tasks_task', 'category_id')
 
 
     models = {
@@ -69,13 +76,22 @@ class Migration(SchemaMigration):
         },
         u'tasks.task': {
             'Meta': {'object_name': 'Task'},
+            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['tasks.TaskCategory']"}),
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'task_user'", 'to': u"orm['auth.User']"}),
+            'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'task_created_set'", 'to': u"orm['auth.User']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'details_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'due_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.Group']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.User']", 'symmetrical': 'False'})
+            'users': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'})
+        },
+        u'tasks.taskcategory': {
+            'Meta': {'object_name': 'TaskCategory'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['tasks.TaskCategory']", 'null': 'True', 'blank': 'True'})
         }
     }
 

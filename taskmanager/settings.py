@@ -41,6 +41,9 @@ INSTALLED_APPS = (
     'south',
     'attachments',
     'bootstrapform',
+    'bootstrap3',
+    'ajax_select',
+    'notification',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -95,3 +98,20 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 SITE_ID = 1
+
+# AJAX_LOOKUP_CHANNELS = {
+#     #  simple: search Person.objects.filter(name__icontains=q)
+# #    'person'  : {'model': 'example.person', 'search_field': 'name'},
+# #    'group'  : {'model': 'auth.group', 'search_field': 'name'},
+#     'group': ('tasks.lookups', 'GroupLookup'),
+#     # define a custom lookup channel
+# #    'song'   : ('example.lookups', 'SongLookup')
+# }
+
+AJAX_LOOKUP_CHANNELS = {
+    #  simple: search Person.objects.filter(name__icontains=q)
+    'userlookup'  : {'model': 'auth.user', 'search_field': 'username'},
+    'grouplookup'  : {'model': 'auth.group', 'search_field': 'name'},
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'

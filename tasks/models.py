@@ -1,10 +1,26 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.contrib.contenttypes import generic
 from attachments.models import Attachment
 
 
 UserModel = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
+
+
+class TaskCategory(models.Model):
+    """
+    A category is a way to classify tasks
+    """
+    name = models.CharField(max_length=30, unique=True)
+    parent = models.ForeignKey('self', blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'task categories'
+    
+    def __unicode__(self):
+        return unicode(self.name)
+
 
 class Task(models.Model):
     """
@@ -13,10 +29,13 @@ class Task(models.Model):
     """
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=30, blank=True, null=True)
+    category = models.ForeignKey(TaskCategory, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(blank=True, null=True)
-    creator = models.ForeignKey(UserModel, related_name='task_user')
-    users = models.ManyToManyField(UserModel)
+    creator = models.ForeignKey(UserModel, related_name='task_created_set')
+    users = models.ManyToManyField(UserModel, blank=True, null=True)
+    groups = models.ManyToManyField(Group, blank=True, null=True)
+    details_file = models.FileField(blank=True, null=True, upload_to='files')
 
     def __unicode__(self):
         return u'<Task: %s>' % self.name

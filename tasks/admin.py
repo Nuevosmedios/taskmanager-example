@@ -1,10 +1,16 @@
 from django.contrib import admin
 from attachments.admin import AttachmentInlines
-from .models import Evidence, Task
+from .models import Evidence, Task, TaskCategory
+
+
+class TaskCategoryAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(TaskCategory, TaskCategoryAdmin)
 
 
 class TaskAdmin(admin.ModelAdmin):
-    inlines = [AttachmentInlines]
+    pass
+#    inlines = [AttachmentInlines]
 admin.site.register(Task, TaskAdmin)
 
 

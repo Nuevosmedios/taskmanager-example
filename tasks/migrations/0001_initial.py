@@ -15,9 +15,28 @@ class Migration(SchemaMigration):
             ('description', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
             ('created_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('due_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('creator', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
+            ('creator', self.gf('django.db.models.fields.related.ForeignKey')(related_name='task_created_set', to=orm['auth.User'])),
+            ('details_file', self.gf('django.db.models.fields.files.FileField')(max_length=100, null=True, blank=True)),
         ))
         db.send_create_signal(u'tasks', ['Task'])
+
+        # Adding M2M table for field users on 'Task'
+        m2m_table_name = db.shorten_name(u'tasks_task_users')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('task', models.ForeignKey(orm[u'tasks.task'], null=False)),
+            ('user', models.ForeignKey(orm[u'auth.user'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['task_id', 'user_id'])
+
+        # Adding M2M table for field groups on 'Task'
+        m2m_table_name = db.shorten_name(u'tasks_task_groups')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('task', models.ForeignKey(orm[u'tasks.task'], null=False)),
+            ('group', models.ForeignKey(orm[u'auth.group'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['task_id', 'group_id'])
 
         # Adding model 'Evidence'
         db.create_table(u'tasks_evidence', (
@@ -32,6 +51,12 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         # Deleting model 'Task'
         db.delete_table(u'tasks_task')
+
+        # Removing M2M table for field users on 'Task'
+        db.delete_table(db.shorten_name(u'tasks_task_users'))
+
+        # Removing M2M table for field groups on 'Task'
+        db.delete_table(db.shorten_name(u'tasks_task_groups'))
 
         # Deleting model 'Evidence'
         db.delete_table(u'tasks_evidence')
@@ -84,11 +109,14 @@ class Migration(SchemaMigration):
         u'tasks.task': {
             'Meta': {'object_name': 'Task'},
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'creator': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'}),
+            'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'task_created_set'", 'to': u"orm['auth.User']"}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'details_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'due_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.Group']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '30'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'users': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'})
         }
     }
 
