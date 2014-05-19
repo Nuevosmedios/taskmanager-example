@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'tasks',
     'south',
     'attachments',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,3 +93,5 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
 )
+
+SITE_ID = 1

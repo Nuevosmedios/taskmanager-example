@@ -15,7 +15,8 @@ class Task(models.Model):
     description = models.CharField(max_length=30, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField(blank=True, null=True)
-    creator = models.OneToOneField(UserModel, related_name='task_user')
+    creator = models.ForeignKey(UserModel, related_name='task_user')
+    users = models.ManyToManyField(UserModel)
 
     def __unicode__(self):
         return u'<Task: %s>' % self.name

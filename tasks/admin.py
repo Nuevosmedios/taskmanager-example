@@ -4,7 +4,7 @@ from .models import Evidence, Task
 
 
 class TaskAdmin(admin.ModelAdmin):
-    pass
+    inlines = [AttachmentInlines]
 admin.site.register(Task, TaskAdmin)
 
 
