@@ -13,6 +13,6 @@ class TaskForm(forms.ModelForm):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         self.fields['users'] = make_ajax_field(Task, 'users', 'userlookup', help_text="")
         self.fields['groups'] = make_ajax_field(Task, 'groups', 'grouplookup', help_text="")
-        self.fields['details_file'].widget.attrs = {'class': 'btn btn-default'}
+        self.fields['details_file'].widget.attrs = {'class': 'btn btn-sm'}
         self.fields['due_date'].widget = DateTimePicker(options={"format": "YYYY-MM-DD",
                                                                  "pickTime": False})

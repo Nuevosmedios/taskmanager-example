@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-22 14:19-0500\n"
+"POT-Creation-Date: 2014-05-22 17:11-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgstr "Tarea creada"
 msgid "a task has been assigned to you"
 msgstr "te ha sido asignada una tarea"
 
-#: models.py:17 models.py:33 templates/tasks/task_list.html:9
+#: models.py:17 models.py:33 templates/tasks/task_list.html:10
 msgid "Name"
 msgstr "Nombre"
 
@@ -34,11 +34,11 @@ msgstr "Nombre"
 msgid "Parent"
 msgstr "Padre"
 
-#: models.py:35 templates/tasks/task_list.html:10
+#: models.py:35 templates/tasks/task_list.html:11
 msgid "Description"
 msgstr "Descripción"
 
-#: models.py:37 templates/tasks/task_list.html:11
+#: models.py:37 templates/tasks/task_list.html:12
 msgid "Category"
 msgstr "Categoría"
 
@@ -46,23 +46,23 @@ msgstr "Categoría"
 msgid "Creation date"
 msgstr "Fecha de creación"
 
-#: models.py:41
-msgid "Date"
-msgstr "Fecha"
+#: models.py:41 templates/tasks/task_list.html:13
+msgid "Due date"
+msgstr "Fecha de entrega"
 
 #: models.py:43
 msgid "Creator"
 msgstr "Creador"
 
-#: models.py:44 templates/tasks/task_list.html:13
+#: models.py:44 templates/tasks/task_list.html:14
 msgid "Users"
 msgstr "Usuarios"
 
-#: models.py:46 templates/tasks/task_list.html:14
+#: models.py:46 templates/tasks/task_list.html:15
 msgid "Groups"
 msgstr "Grupos"
 
-#: models.py:48 templates/tasks/task_list.html:15
+#: models.py:48 templates/tasks/task_list.html:16
 msgid "Attached file"
 msgstr "Archivo adjunto"
 
@@ -78,18 +78,26 @@ msgstr "Actualizado en"
 msgid "Attachments"
 msgstr "Adjuntos"
 
-#: templates/tasks/task_form.html:11
+#: templates/tasks/task_form.html:8
 msgid "Create activity"
 msgstr "Crear actividad"
 
-#: templates/tasks/task_form.html:33
+#: templates/tasks/task_form.html:34
 msgid "Submit"
 msgstr "Enviar"
 
-#: templates/tasks/task_list.html:5
-msgid "Activities you have created"
-msgstr "Actividades que has creado"
+#: templates/tasks/task_form.html:35
+msgid "Cancel"
+msgstr "Cancelar"
 
-#: templates/tasks/task_list.html:12
-msgid "Due date"
-msgstr "Fecha de entrega"
+#: templates/tasks/task_list.html:5
+msgid "Activities created by"
+msgstr "Actividades creadas por"
+
+#: templates/tasks/task_list.html:5
+msgid "Create new"
+msgstr "Crear nueva"
+
+#: templates/tasks/task_list.html:35
+msgid "No tasks yet."
+msgstr "No hay actividades aún."
