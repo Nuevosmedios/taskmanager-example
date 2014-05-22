@@ -1,10 +1,7 @@
 {% extends "site_base_mini.html" %}
 {% load bootstrap3 i18n static %}
 {% block extra_head %}
-    <script src="{% static 'jquery-ui-1.10.4/js/jquery-ui-1.10.4.min.js' %}"></script>
-    <script src="{% static 'ajax_select/js/ajax_select.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'ajax_select/css/ajax_select.css'%}" />
-    {{ form.media }}
+  {{ form.media }}
 {% endblock %}
 {% block content %}
     <div class="panel panel-default">

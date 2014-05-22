@@ -38,7 +38,7 @@ class Task(models.Model):
     created_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name=_('Creation date'))
     due_date = models.DateTimeField(blank=True, null=True,
-                                    verbose_name=_('Date'))
+                                    verbose_name=_('Due date'))
     creator = models.ForeignKey(UserModel, related_name='task_created_set',
                                 verbose_name=_('Creator'))
     users = models.ManyToManyField(UserModel, blank=True, null=True, related_name='task_users_set', verbose_name=_('Users'))

@@ -6,4 +6,6 @@
 <div id="{{html_id}}_on_deck" class="results_on_deck"></div>
 {% block extra_script %}{% endblock %}
 {# django admin adds the help text. this is for use outside of the admin #}
+{% comment %}
 {% block help %}{% if help_text %}<p class="help">{{help_text}}</p>{% endif %}{% endblock %}
+{% endcomment %}

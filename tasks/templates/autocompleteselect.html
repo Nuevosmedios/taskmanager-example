@@ -6,5 +6,7 @@
 <input type="hidden" name="{{name}}" id="{{html_id}}" value="{{current_id}}" data-ajax-select="autocompleteselect" data-plugin-options="{{ data_plugin_options }}" />
 <div id="{{html_id}}_on_deck" class="results_on_deck"><div>{{current_repr|safe}}</div></div>
 {% block extra_script %}{% endblock %}
+{% comment %}
 {% block help %}{% if help_text %}<p class="help">{{help_text}}</p>{% endif %}{% endblock %}
+{% endcomment %}
 </span>

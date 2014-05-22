@@ -10,7 +10,6 @@ class TaskForm(forms.ModelForm):
         exclude = ('creator',)
 
     def __init__(self, *args, **kwargs):
-        print "EN FORM"
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         self.fields['users'] = make_ajax_field(Task, 'users', 'userlookup', help_text="")
         self.fields['groups'] = make_ajax_field(Task, 'groups', 'grouplookup', help_text="")
