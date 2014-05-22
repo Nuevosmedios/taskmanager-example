@@ -1,0 +1,36 @@
+{% extends "site_base_mini.html" %}
+{% load bootstrap3 i18n static bootstrap_pagination %}
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading"><h2>{% trans "Activities you have created" %}</h2></div>
+  <table class="table">
+    <thead>
+      <tr>
+	<th>{% trans "Name" %}</th>
+	<th>{% trans "Description" %}</th>
+	<th>{% trans "Category" %}</th>
+	<th>{% trans "Due date" %}</th>
+	<th>{% trans "Users" %}</th>
+	<th>{% trans "Groups" %}</th>
+	<th>{% trans "Attached file" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task in object_list %}
+      <tr>
+	<td><a href="">{{ task.name }}</a></td>
+	<td>{{ task.description|default_if_none:"" }}</td>
+	<td>{{ task.category|default_if_none:"" }}</td>
+	<td>{{ task.due_date|default_if_none:""|date:"Y-m-d" }}</td>
+	<td>{% for user in task.users.all %}<span class="label label-primary">{{ user }}</span> {% endfor %}</td>
+	<td>{% for group in task.groups.all %}<span class="label label-primary">{{ group }}</span> {% endfor %}</td>
+	<td>{% if task.details_file %}<a href="{{ task.details_file.url }}" target="_blank"><button type="button" class="btn btn-default btn-sm">
+  <span class="glyphicon glyphicon-file"></span></button></a>{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+{% bootstrap_paginate page_obj %}
+{% endblock %}

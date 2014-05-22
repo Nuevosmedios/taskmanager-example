@@ -9,13 +9,13 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        # Changing field 'Task.category'
-        db.alter_column(u'tasks_task', 'category_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tasks.TaskCategory'], null=True))
+        # Changing field 'Task.description'
+        db.alter_column(u'tasks_task', 'description', self.gf('django.db.models.fields.TextField')(null=True))
 
     def backwards(self, orm):
 
-        # Changing field 'Task.category'
-        db.alter_column(u'tasks_task', 'category_id', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['tasks.TaskCategory']))
+        # Changing field 'Task.description'
+        db.alter_column(u'tasks_task', 'description', self.gf('django.db.models.fields.CharField')(max_length=30, null=True))
 
     models = {
         u'auth.group': {
@@ -66,13 +66,13 @@ class Migration(SchemaMigration):
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['tasks.TaskCategory']", 'null': 'True', 'blank': 'True'}),
             'created_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'task_created_set'", 'to': u"orm['auth.User']"}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'details_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'due_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.Group']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'users': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'})
+            'users': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'task_users_set'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['auth.User']"})
         },
         u'tasks.taskcategory': {
             'Meta': {'object_name': 'TaskCategory'},

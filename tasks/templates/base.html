@@ -1,0 +1,120 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="csrf_token" content="{{ csrf_token }}">
+	<title>{% block title %}{% endblock %} - {% block head_title_base %}{% if request.tenant.name %}{{ request.tenant.name }}{% endif %}{% endblock %}</title>
+	<link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png">
+
+	<!-- Styles -->
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-theme.min.css" />
+	
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/custom.css" />
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}{{ config.CLIENTS_CSS }}" />
+	<!-- End Styles -->
+
+	<!-- External Libs -->
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.cookie.js"></script>
+	
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/holder.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/bootstrap.file-input.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/diagnostic.js"></script>
+	<!-- End External Libs -->
+	<!-- Backbone -->
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/underscore.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/backbone.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/handlebars.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/handlebars_helpers.js"></script>
+
+	<!-- End Backbone -->
+	<script type="text/javascript" src="{{ STATIC_URL }}js/functions.js"></script>
+	
+	<!-- <script type="text/javascript" src="{{ STATIC_URL }}js/speedtest/jquery.query-2.0.1.js"></script> -->
+	<!-- <script type="text/javascript" src="{{ STATIC_URL }}js/speedtest/ui.core.min.js"></script> -->
+	<!-- <script type="text/javascript" src="{{ STATIC_URL }}js/speedtest/ui.progressbar.min.js"></script> -->
+	<!-- <script type="text/javascript" src="{{ STATIC_URL }}js/speedtest/config.js"></script> -->
+	<!-- <\!-- Speed Test End -\-> -->
+
+	<!-- Backbone Structure -->
+	<!-- End Backbone Structure -->
+	
+	<script type="text/javascript">
+		var mediaUrl = "{{MEDIA_URL}}";
+	</script>
+	{% block extra_head_base %}
+		{% block extra_head %}{% endblock %}
+	{% endblock %}
+</head>
+<body>
+	<div id="body" class='{% if user.is_authenticated %}in{% endif %}'>
+		{% if messages %}
+			<div class="alert alert-info fade in" id="system-messages">
+				<button type="button" class="close col-md-1 col-md-offset-1" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<div class="container" id="messages_div">
+					<ul id="messages" class="list-unstyled">
+						{% for message in messages %}
+							<li id="message_{{ forloop.counter }}"{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+								<h4>{{ message }}</h4>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		{% endif %}
+		{% comment %}
+		{% if site_wide_announcements %}
+			<div id="site_wide_announcements">
+				<ul>
+					{% for announcement in site_wide_announcements %}
+						<li>
+							<a href="{{ announcement.get_absolute_url }}">{{ announcement }}</a> -
+							<a href="{% url announcement_hide announcement.pk %}?next={{ request.path }}">{% trans "Hide announcement" %}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		{% endcomment %}
+		{% block header %}{% endblock %}
+		{% block body %}{% endblock %}
+		{% block extra_body %}{% endblock %}
+		{% comment %}
+		<div id="speed" style="display:none;">
+			{% include "speedtest.html" %}
+		</div>
+		{% endcomment %}
+		<div id="toclone" style="display:none;">
+			<table class="table table-condensed table-striped diagnostic-table">
+				<tbody>
+					<tr class="tr-to-clone" style="display:none;">
+						<td class="col-md-6 title"></td>
+						<td class="value"></td>
+						<td class="col-md-1 status"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Scripts -->
+		<script type="text/javascript" src="{{ STATIC_URL }}js/libs/session.min.js"></script>
+		<script type="text/javascript">
+			$(document).on('ready', function(){$('input[type=file]').bootstrapFileInput();})
+			$('[data-toggle=tooltip]').tooltip();
+			$('[data-toggle=popover]').popover({'trigger':'click'});
+			$('.errorlist').addClass('list-unstyled');
+			$('.errorlist li').addClass('alert alert-danger');
+			$('input[type="text"]').addClass('form-control');
+			$('input[type="password"]').addClass('form-control');
+			$('textarea').addClass('form-control');
+			$('select').addClass('form-control');
+		</script>
+	<!-- End Scripts -->
+</body>
+</html>

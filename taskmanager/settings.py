@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'ajax_select',
     'notification',
+    'bootstrap_pagination',
 )
 
 MIDDLEWARE_CLASSES = (
